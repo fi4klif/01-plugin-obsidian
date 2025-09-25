@@ -4,8 +4,8 @@
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "Gamified XP system for tracking skills and stats with radar charts",
-	"author": "Your Name",
-	"authorUrl": "",
+	"author": "fi4klif",
+	"authorUrl": "https://github.com/fi4klif",
 	"fundingUrl": "",
 	"isDesktopOnly": false
 }
