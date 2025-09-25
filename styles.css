@@ -1,8 +1,63 @@
-/*
+/* XP System Plugin Styles */
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+/* Radar chart container */
+.xp-radar-container {
+	background: var(--background-secondary);
+	border-radius: 8px;
+	padding: 20px;
+	margin: 16px 0;
+	text-align: center;
+	border: 1px solid var(--background-modifier-border);
+}
 
-If your plugin does not need CSS, delete this file.
+.xp-radar-container h3 {
+	margin-top: 0;
+	color: var(--text-accent);
+	font-weight: 600;
+}
 
-*/
+.xp-radar-container svg {
+	max-width: 100%;
+	height: auto;
+	background: var(--background-primary);
+	border-radius: 4px;
+	padding: 10px;
+}
+
+/* XP task styling */
+.task-list-item:has(.tag[href="#xp"]) {
+	position: relative;
+}
+
+.task-list-item .tag[href*="#xp/"] {
+	background-color: var(--color-accent);
+	color: var(--text-on-accent);
+	border-radius: 12px;
+	padding: 2px 8px;
+	font-size: 0.85em;
+	font-weight: 500;
+	margin: 0 4px;
+}
+
+/* XP progress indicators */
+.xp-progress-bar {
+	width: 100%;
+	height: 8px;
+	background: var(--background-modifier-border);
+	border-radius: 4px;
+	overflow: hidden;
+	margin: 4px 0;
+}
+
+.xp-progress-fill {
+	height: 100%;
+	background: linear-gradient(
+		90deg,
+		var(--color-accent),
+		var(--color-accent-2)
+	);
+	border-radius: 4px;
+	transition: width 0.3s ease;
+}
+
+/* Level badge */
