@@ -11,6 +11,10 @@ export function generateRadarChartHTML(
 		showProgressBars?: boolean;
 		pointRadius?: number;
 		fillOpacity?: number;
+		chartBgColor?: string;
+		chartGridCount?: number;
+		chartFontFamily?: string;
+		chartStrokeWidth?: number;
 	}
 ): string {
 	const size = options.chartSize || 360;
@@ -19,10 +23,14 @@ export function generateRadarChartHTML(
 	const numStats = mainStatsData.length;
 	const fillColor = options.fillColor || "rgba(75,192,192,0.4)";
 	const strokeColor = options.strokeColor || "rgba(75,192,192,1)";
-	const gridColor = options.gridColor || "#ddd";
-	const labelColor = options.labelColor || "#333";
+	const gridColor = options.gridColor || "#444";
+	const labelColor = options.labelColor || "#eee";
 	const pointRadius = options.pointRadius || 4;
 	const fillOpacity = options.fillOpacity ?? 0.4;
+	const chartBgColor = options.chartBgColor || "#181818";
+	const chartGridCount = options.chartGridCount || 5;
+	const chartFontFamily = options.chartFontFamily || "inherit";
+	const chartStrokeWidth = options.chartStrokeWidth || 2;
 
 	// Helper: нормалізувати рівень (наприклад, 1-10 → 10-100%)
 	function normLevel(level: number) {
@@ -30,12 +38,11 @@ export function generateRadarChartHTML(
 	}
 
 	// SVG grid circles
-	const gridCircles = [20, 40, 60, 80, 100]
-		.map((percent) => {
-			const r = (radius * percent) / 100;
-			return `<circle cx="${center}" cy="${center}" r="${r}" fill="none" stroke="${gridColor}" stroke-width="1"/>`;
-		})
-		.join("");
+	const gridCircles = Array.from({ length: chartGridCount }, (_, i) => {
+		const percent = ((i + 1) / chartGridCount) * 100;
+		const r = (radius * percent) / 100;
+		return `<circle cx="${center}" cy="${center}" r="${r}" fill="none" stroke="${gridColor}" stroke-width="1"/>`;
+	}).join("");
 
 	// Axis lines
 	const axes = mainStatsData
@@ -77,12 +84,12 @@ export function generateRadarChartHTML(
 			const x = center + labelRadius * Math.cos(angle);
 			const y = center + labelRadius * Math.sin(angle);
 			return `
-      <text x="${x}" y="${y}" text-anchor="middle" dy="5" font-size="12" fill="${labelColor}">
+      <text x="${x}" y="${y}" text-anchor="middle" dy="5" font-size="14" fill="${labelColor}" font-family="${chartFontFamily}">
         ${stat.name}
       </text>
       <text x="${x}" y="${
-				y + 15
-			}" text-anchor="middle" dy="5" font-size="10" fill="#666">
+				y + 18
+			}" text-anchor="middle" dy="5" font-size="12" fill="#aaa" font-family="${chartFontFamily}">
         Lvl ${stat.level}
       </text>
     `;
@@ -90,15 +97,15 @@ export function generateRadarChartHTML(
 		.join("");
 
 	return `
-    <div class="xp-radar-container">
-      <h3>XP Radar</h3>
-      <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <div class="xp-radar-container" style="background:${chartBgColor};">
+      <h3 style="color:${labelColor};font-family:${chartFontFamily};">XP Radar</h3>
+      <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="background:${chartBgColor};border-radius:8px;">
         ${gridCircles}
         ${axes}
         <polygon points="${polygonPoints}"
           fill="${fillColor.replace(/[\d.]+\)$/g, `${fillOpacity})`)}"
           stroke="${strokeColor}"
-          stroke-width="2"/>
+          stroke-width="${chartStrokeWidth}"/>
         ${dataPoints}
         ${labels}
       </svg>

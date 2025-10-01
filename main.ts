@@ -35,6 +35,12 @@ interface XPSystemSettings {
 	fillOpacity?: number;
 
 	chartTheme?: "default" | "dark" | "colorful";
+
+	// New fields for radar chart customization
+	chartBgColor?: string;
+	chartGridCount?: number;
+	chartFontFamily?: string;
+	chartStrokeWidth?: number;
 }
 
 const DEFAULT_SETTINGS: XPSystemSettings = {
@@ -58,6 +64,12 @@ const DEFAULT_SETTINGS: XPSystemSettings = {
 	fillOpacity: 0.4,
 
 	chartTheme: "default",
+
+	// New default values for radar chart customization
+	chartBgColor: "#181818",
+	chartGridCount: 5,
+	chartFontFamily: "inherit",
+	chartStrokeWidth: 2,
 };
 
 export default class XPSystemPlugin extends Plugin {
@@ -477,6 +489,59 @@ class XPSystemSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				})
 		);
+
+		new Setting(containerEl)
+			.setName("Radar background color")
+			.setDesc("Background color of the radar chart")
+			.addColorPicker((picker) =>
+				picker
+					.setValue(this.plugin.settings.chartBgColor || "#181818")
+					.onChange(async (value) => {
+						this.plugin.settings.chartBgColor = value;
+						await this.plugin.saveSettings();
+					})
+			);
+
+		new Setting(containerEl)
+			.setName("Radar grid count")
+			.setDesc("Number of grid rings")
+			.addSlider((slider) =>
+				slider
+					.setLimits(3, 10, 1)
+					.setValue(this.plugin.settings.chartGridCount || 5)
+					.setDynamicTooltip()
+					.onChange(async (value) => {
+						this.plugin.settings.chartGridCount = value;
+						await this.plugin.saveSettings();
+					})
+			);
+
+		new Setting(containerEl)
+			.setName("Radar font family")
+			.setDesc("Font for labels")
+			.addText((text) =>
+				text
+					.setPlaceholder("inherit")
+					.setValue(this.plugin.settings.chartFontFamily || "inherit")
+					.onChange(async (value) => {
+						this.plugin.settings.chartFontFamily = value;
+						await this.plugin.saveSettings();
+					})
+			);
+
+		new Setting(containerEl)
+			.setName("Radar line width")
+			.setDesc("Stroke width of radar polygon")
+			.addSlider((slider) =>
+				slider
+					.setLimits(1, 8, 1)
+					.setValue(this.plugin.settings.chartStrokeWidth || 2)
+					.setDynamicTooltip()
+					.onChange(async (value) => {
+						this.plugin.settings.chartStrokeWidth = value;
+						await this.plugin.saveSettings();
+					})
+			);
 
 		/* --- Usage help --- */
 		containerEl.createEl("h3", { text: "Usage" });
