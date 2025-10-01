@@ -1,5 +1,5 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
-import XPPlugin from "../main";
+import type XPPlugin from "../main";
 
 export interface XPSettings {
 	xpMultiplier: number;
@@ -14,9 +14,18 @@ export const DEFAULT_SETTINGS: XPSettings = {
 };
 
 export class XPSettingsTab extends PluginSettingTab {
-	plugin: XPPlugin;
+	plugin: XPPlugin & {
+		settings: XPSettings;
+		saveSettings: () => Promise<void>;
+	};
 
-	constructor(app: App, plugin: XPPlugin) {
+	constructor(
+		app: App,
+		plugin: XPPlugin & {
+			settings: XPSettings;
+			saveSettings: () => Promise<void>;
+		}
+	) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
