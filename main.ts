@@ -41,6 +41,14 @@ interface XPSystemSettings {
 	chartGridCount?: number;
 	chartFontFamily?: string;
 	chartStrokeWidth?: number;
+
+	// Additional customization options
+	axisColor?: string;
+	axisOpacity?: number;
+	axisWidth?: number;
+	labelFontWeight?: string;
+	labelFontSize?: number;
+	labelTextShadow?: string;
 }
 
 const DEFAULT_SETTINGS: XPSystemSettings = {
@@ -70,6 +78,14 @@ const DEFAULT_SETTINGS: XPSystemSettings = {
 	chartGridCount: 5,
 	chartFontFamily: "inherit",
 	chartStrokeWidth: 2,
+
+	// Default values for additional customization options
+	axisColor: "#fff",
+	axisOpacity: 0.3,
+	axisWidth: 2,
+	labelFontWeight: "bold",
+	labelFontSize: 16,
+	labelTextShadow: "0 0 6px #000, 0 0 2px #000",
 };
 
 export default class XPSystemPlugin extends Plugin {
@@ -258,6 +274,9 @@ export default class XPSystemPlugin extends Plugin {
 					'<div style="text-align: center; padding: 20px; color: #666;">No main stats found</div>';
 				return;
 			}
+			const mode = source.trim().toLowerCase().includes("circle")
+				? "circle"
+				: "triangle";
 			const chartHTML = generateRadarChartHTML(mainStatsData, {
 				chartSize: this.settings.chartSize,
 				fillColor: this.settings.chartFillColor,
@@ -269,6 +288,15 @@ export default class XPSystemPlugin extends Plugin {
 				chartGridCount: this.settings.chartGridCount,
 				chartFontFamily: this.settings.chartFontFamily,
 				chartStrokeWidth: this.settings.chartStrokeWidth,
+				axisColor: this.settings.axisColor || "#fff",
+				axisOpacity: this.settings.axisOpacity ?? 0.3,
+				axisWidth: this.settings.axisWidth || 2,
+				labelFontWeight: this.settings.labelFontWeight || "bold",
+				labelFontSize: this.settings.labelFontSize || 16,
+				labelTextShadow:
+					this.settings.labelTextShadow ||
+					"0 0 6px #000, 0 0 2px #000",
+				mode,
 			});
 			el.innerHTML = chartHTML;
 		} catch (err) {
