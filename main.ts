@@ -264,9 +264,11 @@ export default class XPSystemPlugin extends Plugin {
 				strokeColor: this.settings.chartStrokeColor,
 				gridColor: this.settings.chartGridColor,
 				labelColor: this.settings.chartLabelColor,
-				showProgressBars: this.settings.showProgressBars,
 				pointRadius: this.settings.pointRadius,
 				fillOpacity: this.settings.fillOpacity,
+				chartGridCount: this.settings.chartGridCount,
+				chartFontFamily: this.settings.chartFontFamily,
+				chartStrokeWidth: this.settings.chartStrokeWidth,
 			});
 			el.innerHTML = chartHTML;
 		} catch (err) {

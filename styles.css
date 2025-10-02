@@ -2,26 +2,22 @@
 
 /* Radar chart container */
 .xp-radar-container {
-	background: var(--background-secondary);
-	border-radius: 8px;
-	padding: 20px;
-	margin: 16px 0;
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	box-shadow: none !important;
 	text-align: center;
-	border: 1px solid var(--background-modifier-border);
 }
 
 .xp-radar-container h3 {
-	margin-top: 0;
-	color: var(--text-accent);
-	font-weight: 600;
+	display: none;
 }
 
 .xp-radar-container svg {
-	max-width: 100%;
-	height: auto;
-	background: var(--background-primary);
-	border-radius: 4px;
-	padding: 10px;
+	background: transparent !important;
+	border-radius: 0 !important;
+	padding: 0 !important;
 }
 
 /* XP task styling */
@@ -108,10 +104,18 @@
 	box-sizing: border-box;
 }
 .xp-radar-container {
-	background: var(--background-secondary);
-	border-radius: 8px;
-	padding: 20px;
-	margin: 16px 0;
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	box-shadow: none !important;
 	text-align: center;
-	border: 1px solid var(--background-modifier-border);
+}
+.xp-radar-container h3 {
+	display: none;
+}
+.xp-radar-container svg {
+	background: transparent !important;
+	border-radius: 0 !important;
+	padding: 0 !important;
 }
